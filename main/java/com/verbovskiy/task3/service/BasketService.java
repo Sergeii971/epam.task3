@@ -12,7 +12,9 @@ import com.verbovskiy.task3.validator.WeightValidator;
 import java.util.List;
 
 public class BasketService {
-    public Basket addBallToBasket(Basket basket, Ball ball) throws TaskException {
+    public boolean addBallToBasket(Basket basket, Ball ball) throws TaskException {
+        boolean result = true;
+
         if ((basket == null) || (ball == null) || (ball.getWeightInKilogram() <= 0)
                 || (ball.getVolume() <= 0)) {
             throw new TaskException("incorrect data");
@@ -34,26 +36,27 @@ public class BasketService {
         }
         if ((weightValidator.validateTotalWeight(totalBallWeight))
                 && (volumeValidator.validateTotalBallVolumeInBasket(totalBallVolume))) {
-            basket.getBalls().add(ball);
+            basket.add(ball);
         } else {
-            throw new TaskException("incorrect input");
+           result = false;
         }
-        return basket;
+        return result;
     }
 
-    public Basket removeBallFromBasket(Basket basket, int ballIndex) throws TaskException {
+    public boolean removeBallFromBasket(Basket basket, int ballIndex) throws TaskException {
         BasketValidator basketValidator = new BasketValidator();
+        boolean result = true;
 
         if ((basket == null) || (!basketValidator.isBallNumberInBasketNotZero(basket.getBalls()))) {
             throw new TaskException("incorrect data");
         }
         int ballNumber = basket.getBalls().size();
-
-        if ((ballNumber < ballIndex) || ballIndex < 0) {
-            throw new TaskException("incorrect index");
+        if ((ballNumber - 1 < ballIndex) || ballIndex < 0) {
+            result = false;
+        } else {
+            basket.remove(ballIndex);
         }
-        basket.getBalls().remove(ballIndex);
-        return basket;
+        return result;
     }
 
     public  double calculateTotalBallVolumeInBasket(Basket basket) throws TaskException {

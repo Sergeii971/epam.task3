@@ -12,7 +12,6 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class WeightValidatorTest {
-
     @Test
     public void isBallWeightInBasketPositiveValidTest() {
         WeightValidator weightValidator = new WeightValidator(20);

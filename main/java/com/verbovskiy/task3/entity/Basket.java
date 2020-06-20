@@ -1,5 +1,6 @@
 package com.verbovskiy.task3.entity;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Basket {
@@ -18,7 +19,7 @@ public class Basket {
     }
 
     public List<Ball> getBalls() {
-        return balls;
+        return Collections.unmodifiableList(balls);
     }
 
     public double getWeightLimitInKilograms() {
@@ -31,6 +32,14 @@ public class Basket {
 
     public double getVolumeInCubicMeters() {
         return volumeInCubicMeters;
+    }
+
+    public void add(Ball ball) {
+        balls.add(ball);
+    }
+
+    public void remove(int index) {
+        balls.remove(index);
     }
 
     @Override

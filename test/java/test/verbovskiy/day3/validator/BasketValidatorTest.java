@@ -12,6 +12,7 @@ import java.util.List;
 
 public class BasketValidatorTest extends TestCase {
     BasketValidator basketValidator;
+
     @BeforeClass
     public void setUp() {
         basketValidator = new BasketValidator();

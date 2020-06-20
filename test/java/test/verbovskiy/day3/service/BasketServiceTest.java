@@ -26,13 +26,10 @@ public class BasketServiceTest extends TestCase {
     public void addBallToBasketValidTest() {
         try {
             Ball ball = new Ball(2,2, BallColor.BLUE);
-            List<Ball> balls = new ArrayList<Ball>();
-
-            balls.add(ball);
-            Basket expected = new Basket(balls,15,15);
-            Basket actual = basketService.addBallToBasket(new Basket(new ArrayList<Ball>(),
+            boolean actual = basketService.addBallToBasket(new Basket(new ArrayList<Ball>(),
                             15,15),ball);
-            assertEquals(actual,expected);
+
+            assertTrue(actual);
         } catch (TaskException e) {
             fail(e.getMessage());
         }
@@ -41,14 +38,11 @@ public class BasketServiceTest extends TestCase {
     @Test
     public void addBallToBasketInvalidTest() {
         try {
-            Ball ball = new Ball(2,2, BallColor.BLUE);
-            List<Ball> balls = new ArrayList<Ball>();
-
-            balls.add(ball);
-            Basket expected = new Basket(balls,15,15);
-            Basket actual = basketService.addBallToBasket(new Basket(new ArrayList<Ball>(),
+            Ball ball = new Ball(11,11, BallColor.BLUE);
+            boolean actual = basketService.addBallToBasket(new Basket(new ArrayList<Ball>(),
                     9,10),ball);
-            assertNotEquals(actual,expected);
+
+            assertFalse(actual);
         } catch (TaskException e) {
             fail(e.getMessage());
         }
@@ -65,19 +59,15 @@ public class BasketServiceTest extends TestCase {
             Ball ball1 = new Ball(2,2, BallColor.BLUE);
             Ball ball2 = new Ball(2.2,2.3, BallColor.GREEN);
             Ball ball3 =new Ball(1,1, BallColor.ORANGE);
-            List<Ball> ballsExpected = new ArrayList<Ball>();
             List<Ball> ballsToRemove = new ArrayList<Ball>();
 
-            ballsExpected.add(ball1);
-            ballsExpected.add(ball2);
-            Basket expected = new Basket(ballsExpected, 10,10);
             ballsToRemove.add(ball1);
             ballsToRemove.add(ball2);
             ballsToRemove.add(ball3);
-            Basket actual = basketService.removeBallFromBasket(new Basket(ballsToRemove,
+            boolean actual = basketService.removeBallFromBasket(new Basket(ballsToRemove,
                     10,10),2);
 
-            assertEquals(actual,expected);
+                assertTrue(actual);
         } catch (TaskException e) {
             fail(e.getMessage());
         }
@@ -89,19 +79,15 @@ public class BasketServiceTest extends TestCase {
             Ball ball1 = new Ball(2,2, BallColor.BLUE);
             Ball ball2 = new Ball(2.2,2.3, BallColor.GREEN);
             Ball ball3 =new Ball(1,1, BallColor.ORANGE);
-            List<Ball> ballsExpected = new ArrayList<Ball>();
             List<Ball> ballsToRemove = new ArrayList<Ball>();
 
-            ballsExpected.add(ball1);
-            ballsExpected.add(ball2);
-            Basket expected = new Basket(ballsExpected, 10,10);
             ballsToRemove.add(ball1);
             ballsToRemove.add(ball2);
             ballsToRemove.add(ball3);
-            Basket actual = basketService.removeBallFromBasket(new Basket(ballsToRemove,
-                    10,10),1);
+            boolean actual = basketService.removeBallFromBasket(new Basket(ballsToRemove,
+                    10,10),5);
 
-            assertNotEquals(actual,expected);
+            assertFalse(actual);
         } catch (TaskException e) {
             fail(e.getMessage());
         }
@@ -119,6 +105,7 @@ public class BasketServiceTest extends TestCase {
             Ball ball2 = new Ball(2.2,2.3, BallColor.GREEN);
             Ball ball3 =new Ball(1,1, BallColor.ORANGE);
             List<Ball> balls = new ArrayList<Ball>();
+
             balls.add(ball1);
             balls.add(ball2);
             balls.add(ball3);
@@ -139,6 +126,7 @@ public class BasketServiceTest extends TestCase {
             Ball ball2 = new Ball(2.2,2.3, BallColor.GREEN);
             Ball ball3 =new Ball(1,1, BallColor.ORANGE);
             List<Ball> balls = new ArrayList<Ball>();
+
             balls.add(ball1);
             balls.add(ball2);
             balls.add(ball3);
