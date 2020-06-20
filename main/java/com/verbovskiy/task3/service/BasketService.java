@@ -13,7 +13,8 @@ import java.util.List;
 
 public class BasketService {
     public Basket addBallToBasket(Basket basket, Ball ball) throws TaskException {
-        if ((basket == null) || (ball == null)) {
+        if ((basket == null) || (ball == null) || (ball.getWeightInKilogram() <= 0)
+                || (ball.getVolume() <= 0)) {
             throw new TaskException("incorrect data");
         }
         WeightValidator weightValidator = new WeightValidator(basket.getWeightLimitInKilograms());
@@ -31,8 +32,8 @@ public class BasketService {
             totalBallWeight = ball.getWeightInKilogram();
             totalBallVolume = ball.getVolume();
         }
-        if ((ball.getWeightInKilogram() > 0) && (weightValidator.validateTotalWeight(totalBallWeight))
-        && (ball.getVolume() > 0) && (volumeValidator.validateTotalBallVolumeInBasket(totalBallVolume))) {
+        if ((weightValidator.validateTotalWeight(totalBallWeight))
+                && (volumeValidator.validateTotalBallVolumeInBasket(totalBallVolume))) {
             basket.getBalls().add(ball);
         } else {
             throw new TaskException("incorrect input");
@@ -44,7 +45,7 @@ public class BasketService {
         BasketValidator basketValidator = new BasketValidator();
 
         if ((basket == null) || (!basketValidator.isBallNumberInBasketNotZero(basket.getBalls()))) {
-            throw new TaskException("incorrect input");
+            throw new TaskException("incorrect data");
         }
         int ballNumber = basket.getBalls().size();
 
@@ -72,11 +73,11 @@ public class BasketService {
                 if (volumeValidator.validateTotalBallVolumeInBasket(totalVolume)) {
                     totalVolume += ball.getVolume();
                 } else {
-                    throw new TaskException("incorrect input");
+                    throw new TaskException("incorrect data");
                 }
             }
         } else {
-            throw new TaskException("incorrect input");
+            throw new TaskException("incorrect data");
         }
         return totalVolume;
     }
@@ -98,17 +99,17 @@ public class BasketService {
                 if (weightValidator.validateTotalWeight(totalWeight)) {
                     totalWeight += ball.getWeightInKilogram();
                 } else {
-                    throw new TaskException("incorrect input");
+                    throw new TaskException("incorrect data");
                 }
             }
         } else {
-            throw new TaskException("incorrect input");
+            throw new TaskException("incorrect data");
         }
         return totalWeight;
     }
 
     public int calculateCertainColorBallNumberInBasket(Basket basket, BallColor ballColor) throws TaskException {
-        int count = 0;
+        int certainColorBallNumber = 0;
         BasketValidator basketValidator = new BasketValidator();
         BallValidator ballValidator = new BallValidator();
 
@@ -118,12 +119,12 @@ public class BasketService {
 
             for (Ball ball : ballInBasket) {
                 if (ball.getBallColor().equals(ballColor)) {
-                    count++;
+                    certainColorBallNumber++;
                 }
             }
         } else {
-            throw new TaskException("incorrect input");
+            throw new TaskException("incorrect data");
         }
-        return count;
+        return certainColorBallNumber;
     }
 }
